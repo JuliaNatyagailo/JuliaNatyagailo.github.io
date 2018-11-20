@@ -1,5 +1,5 @@
-// always default value is  today in datepicker
 document.addEventListener("DOMContentLoaded", function (event) {
+    // always default value is  today in datepicker
     document.getElementById("inputFirstDate").valueAsDate = new Date();
 
     // if url has parameters, values of form from url
@@ -18,12 +18,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         clickSubmit();
     } else {
-
         // hide 2,3 blocks with calculations
         document.getElementById("totalSum").style.display = "none";
         document.getElementById("shedulePay").style.display = "none";
     }
-
 });
 
 // function of incoming value for transmission 
@@ -32,15 +30,17 @@ const creditCount = () => {
     document.getElementById("totalSum").style.display = "block";
     document.getElementById("shedulePay").style.display = "block";
     // get form values
-
     let inputSum = document.getElementById("inputSum");
+    inputSum.value = numberFormatReverse(inputSum.value);
+    inputSum.value = Number(inputSum.value);
     let inputTerm = document.getElementById("inputTerm");
     let inputPercent = document.getElementById("inputPercent");
     let inputFirstDate = document.getElementById("inputFirstDate");
     let selectType = document.getElementById("selectType");
-    // transmission form values for function of create array
-    return shedulePayment(inputSum.value, inputTerm.value, inputPercent.value, inputFirstDate.value, selectType.value),
-        urlChangeAddParameters(inputSum, inputTerm, inputPercent, inputFirstDate, selectType);
+    // transmission form values for function of create array, change url
+    shedulePayment(inputSum.value, inputTerm.value, inputPercent.value, inputFirstDate.value, selectType.value);
+    urlChangeAddParameters(inputSum, inputTerm, inputPercent, inputFirstDate, selectType);
+    inputSum.value = numberFormat(inputSum.value);
 };
 
 // function monthly payment and total overpayment
@@ -150,7 +150,12 @@ const clickSubmit = () => {
 
 // function format number triada
 const numberFormat = (x) => {
+    numberFormatReverse(x);
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+// function format number without spaces
+const numberFormatReverse = (x) => {
+    return x.split(' ').join('');
 }
 
 // function change url with parameters 

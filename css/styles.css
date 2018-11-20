@@ -102,6 +102,11 @@ table thead tr:first-child th:last-child {
     right: 50px;
     top: 10px;
 }
+@media print {
+    .for-print {
+        display: none;
+    }
+}
 @media screen and (max-width: 767px) {
     label, .totalLabel {
         min-width: 100%;
